@@ -102,7 +102,7 @@ arr[5] = 'hello'; // Error, Property '5' does not exist on type '[string, number
 ```
 
 
-## Enum
+### Enum
 이넘은 C, Java와 같은 다른 언어에서 흔하게 쓰이는 타입으로 특정 값(상수)들의 집합
 ```js
 enum Avengers { Capt, IronMan, Thor }
@@ -122,7 +122,7 @@ let hero: Avengers = Avengers[2]; // Capt
 let hero: Avengers = Avengers[4]; // Thor
 ```
 
-## any
+### any
 모든 타입에 대해서 허용한다는 의미
 ```js
 let str: any = 'hi';
@@ -130,7 +130,7 @@ let num: any = 10;
 let arr: any = ['a', 2, true];
 ```
 
-## void
+### void
 반환 값이 없는 함수의 반환 타입 return이 없거나 return이 있더라도 반환하는 값이 없으면 함수의 반환 타입을 void로 지정
 ```js
 function printSomething(): void {
@@ -142,7 +142,7 @@ function returnNothing(): void {
 }
 ```
 
-## Never
+### Never
 함수의 끝에 절대 도달하지 않는다는 의미를 지닌 타입
 ```js
 function neverEnd(): never {
@@ -152,7 +152,7 @@ function neverEnd(): never {
 }
 ```
 
-## unknown
+### unknown
 어떤 타입인지 모르는 변수는 타입스크립트에서 unknown 이라는 타입을 사용할 수 있다
 ```js
 let a:unknown;
@@ -168,12 +168,67 @@ if(typeof a === "string"){
 
 ## 변수명 + ?
 변수명 뒤에 물음표를 붙이면 타입이 undefined 도 같이 붙는다 <br>
-**age?:number** 를 붙이게 되면 타입은 number | undefined 가
+**age?:number** 를 붙이게 되면 타입은 number | undefined 가 된다
 ```js
 const player : {
     name: string,
     age?:number
 } = {
     name: "deepjun"
+}
+```
+
+## 함수
+
+### Call Signatures
+미리 타입을 만들고 함수가 어떻게 작동하는지 서술해둘 수 있다
+```js
+type Add = (a:number, b:number) => number;
+
+const add:Add = (a,b) => a+b
+```
+
+### Overloading
+오버로딩은 서로다른 함수가 여러개의 call signatures를 가지고 있을 때 발생시킨다 <br>
+```js
+type Add = {
+    (a:number, b:number) : number
+    (a:number, b:string) : number
+}
+
+const add:Add = (a,b) => {
+    if(typeof b === "string") return a;
+    return a + b
+}
+```
+```js
+type Add = {
+    (a:number, b:number) : number
+    (a:number, b:number, c:number) : number
+}
+
+const add:Add = (a,b,c?:number) => {
+    if(c) return a + b + c
+    return a + b
+}
+
+add(1, 2)
+add(1, 2, 3)
+```
+```js
+type Config = {
+    path: string,
+    state: object
+}
+type Push = {
+    (path:string):void
+    (config: Config):void
+}
+
+const push:Push = (config) => {
+    if(typeof config === "string") console.log(config)
+    else{
+        console.log(config.path, config.state)
+    } 
 }
 ```
