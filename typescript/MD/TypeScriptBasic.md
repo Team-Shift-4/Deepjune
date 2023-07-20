@@ -178,7 +178,7 @@ const player : {
 }
 ```
 
-## 함수
+# 함수
 
 ### Call Signatures
 미리 타입을 만들고 함수가 어떻게 작동하는지 서술해둘 수 있다
@@ -232,3 +232,6 @@ const push:Push = (config) => {
     } 
 }
 ```
+
+### 다형성
+<br>
