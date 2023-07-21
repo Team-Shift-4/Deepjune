@@ -1,5 +1,5 @@
 # 클래스
-
+객체지향 프로그래밍
 ```js
 //abstract Class 추상 클래스
 //abstract Class : 다른 클래스가 상송받을 수 있는 class
